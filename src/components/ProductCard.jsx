@@ -1,13 +1,13 @@
 function ProductCard({ product }) {
   return (
     <div>
-      <img src={product.image} alt={product.title} width="200" />
+      <img src={product.image} width="300" />
 
       <h2>{product.title}</h2>
 
       <p>Kategori: {product.category}</p>
 
-      <p>{product.wants}</p>
+      <p>Ønsker å bytte mot: {product.wanted}</p>
     </div>
   )
 }

@@ -1,17 +1,27 @@
-export const products = [
+const products = [
   {
     id: 1,
-    title: "Grønn jakke",
+    title: "Nike jakke",
     category: "Klær",
-    image: "https://via.placeholder.com/200",
-    wants: "Ønsker å bytte mot genser"
+    wanted: "Hettegenser",
+    image: "/images/clothes.png"
   },
 
   {
     id: 2,
-    title: "Stol",
+    title: "TV-benk",
     category: "Møbler",
-    image: "https://via.placeholder.com/200",
-    wants: "Ønsker å bytte mot lampe"
+    wanted: "Kontorstol",
+    image: "/images/elektronikk.png"
+  },
+
+  {
+    id: 3,
+    title: "iPad",
+    category: "Elektronikk",
+    wanted: "AirPods",
+    image: "/images/mobler.png"
   }
 ]
+
+export default products

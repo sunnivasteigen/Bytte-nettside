@@ -1,16 +1,17 @@
-import { products } from "./data/products"
-import ProductCard from "./components/ProductCard"
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Clothes from "./pages/clothes";
 
 function App() {
   return (
-    <div>
-      <h1>Bytte-nettside</h1>
-
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/clothes" element={<Clothes />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
