@@ -18,13 +18,15 @@ function Home() {
           <h2>Elektronikk</h2>
           <img src="/images/elektronikk.png" width="300" />
         </div>
-
-        <div>
+<Link to="/mobler"> 
+        <div> 
           <h2>Møbler</h2>
           <img src="/images/mobler.png" width="300" />
         </div>
+        </Link>
       </div>
     </div>
+  
   )
 }
 
