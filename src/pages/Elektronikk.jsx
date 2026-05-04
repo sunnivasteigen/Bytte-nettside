@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
-function Clothes() {
+function Elektronikk() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -23,24 +23,21 @@ function Clothes() {
 
   return (
     <div style={{ textAlign: "center", padding: "40px" }}>
-      <h1>Klær</h1>
-      <p>Her finner du klær som kan byttes.</p>
+      <h1>Elektronikk</h1>
 
-      <div style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
-        {products
-          .filter((p) => p.category === "clothes")
-          .map((product) => (
-            <div key={product.id}>
-              <img src={product.image} width="200" />
-              <h2>{product.title}</h2>
-              <p>{product.description}</p>
-              <p>Ønsker å bytte mot: {product.wants}</p>
-            </div>
-          ))}
-          <Link to="/">← Tilbake</Link>
-      </div>
+      {products
+        .filter((p) => p.category === "electronics")
+        .map((product) => (
+          <div key={product.id}>
+            <img src={product.image} width="200" />
+            <h2>{product.title}</h2>
+            <p>{product.description}</p>
+            <p>Ønsker å bytte mot: {product.wants}</p>
+          </div>
+        ))}
+        <Link to="/">← Tilbake</Link>
     </div>
   );
 }
 
-export default Clothes;
+export default Elektronikk;
