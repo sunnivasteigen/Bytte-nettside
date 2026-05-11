@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { db, auth } from "../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
@@ -8,6 +7,7 @@ function AddProduct() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [wants, setWants] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -22,6 +22,7 @@ function AddProduct() {
       description,
       category,
       imageUrl,
+      wants,
       ownerId: auth.currentUser.uid,
       ownerEmail: auth.currentUser.email,
       createdAt: serverTimestamp(),
@@ -33,6 +34,7 @@ function AddProduct() {
     setDescription("");
     setCategory("");
     setImageUrl("");
+    setWants("");
   }
 
   return (
@@ -40,6 +42,7 @@ function AddProduct() {
       <h1>Legg til produkt</h1>
 
       <form onSubmit={handleSubmit}>
+
         <input
           type="text"
           placeholder="Produktnavn"
@@ -59,26 +62,38 @@ function AddProduct() {
 
         <input
           type="text"
-          placeholder="Kategori"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          placeholder="Hva ønsker du å bytte mot?"
+          value={wants}
+          onChange={(e) => setWants(e.target.value)}
         />
 
         <br /><br />
 
-      <select
-  value={category}
-  onChange={(e) => setCategory(e.target.value)}
->
-  <option value="">Velg kategori</option>
-  <option value="clothes">Klær</option>
-  <option value="electronics">Elektronikk</option>
-  <option value="furniture">Møbler</option>
-</select>
+        <input
+          type="text"
+          placeholder="Bilde-URL (/images/bilde.png)"
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
 
         <br /><br />
 
-        <button type="submit">Legg til produkt</button>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="">Velg kategori</option>
+          <option value="clothes">Klær</option>
+          <option value="electronics">Elektronikk</option>
+          <option value="furniture">Møbler</option>
+        </select>
+
+        <br /><br />
+
+        <button type="submit">
+          Legg til produkt
+        </button>
+
       </form>
     </div>
   );
