@@ -83,8 +83,7 @@ function Mobler() {
               >
                 <img
                   src={
-                    product.imageUrl ||
-                    "/images/mobler.png"
+                    src={product.image || product.imageUrl || "/images/mobler.png"}
                   }
                   width="220"
                   style={{

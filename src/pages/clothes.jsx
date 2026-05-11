@@ -78,7 +78,7 @@ function Clothes() {
                 }}
               >
                 <img
-                  src={product.imageUrl || "/images/clothes.png"}
+                 src={product.image || product.imageUrl || "/images/clothes.png"}
                   width="220"
                   style={{
                     borderRadius: "12px",

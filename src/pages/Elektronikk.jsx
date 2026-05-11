@@ -78,7 +78,7 @@ function Elektronikk() {
                 }}
               >
                 <img
-                  src={product.imageUrl || "/images/elektronikk.png"}
+                  src={product.image || product.imageUrl || "/images/elektronikk.png"}
                   width="220"
                   style={{
                     borderRadius: "12px",
