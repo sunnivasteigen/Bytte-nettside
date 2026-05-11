@@ -55,7 +55,11 @@ function Mobler() {
         {products
 
           // Viser kun produkter i kategorien møbler
-          .filter((p) => p.category === "furniture")
+          .filter(
+            (p) =>
+              p.category === "Møbler" ||
+              p.category === "mobler"
+          )
 
           .map((product) => (
 
@@ -78,7 +82,10 @@ function Mobler() {
                 }}
               >
                 <img
-                  src={product.image}
+                  src={
+                    product.imageUrl ||
+                    "/images/mobler.png"
+                  }
                   width="220"
                   style={{
                     borderRadius: "12px",
@@ -91,9 +98,11 @@ function Mobler() {
 
                 <p>{product.description}</p>
 
-                <p>
-                  Ønsker å bytte mot: {product.wants}
-                </p>
+                {product.wants && (
+                  <p>
+                    Ønsker å bytte mot: {product.wants}
+                  </p>
+                )}
               </div>
             </Link>
           ))}

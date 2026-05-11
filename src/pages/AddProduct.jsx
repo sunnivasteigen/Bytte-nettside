@@ -1,80 +1,87 @@
-// Navigation.jsx viser menyen øverst på nettsiden
 
-import { Link } from "react-router-dom";
-import { auth } from "../firebase";
-import { signOut, onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { db, auth } from "../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-function Navigation() {
+function AddProduct() {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
-  // Lagrer hvilken bruker som er logget inn
-  const [user, setUser] = useState(null);
+  async function handleSubmit(e) {
+    e.preventDefault();
 
-  // Lytter etter innlogging/utlogging
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    if (!auth.currentUser) {
+      alert("Du må være logget inn for å legge til produkt.");
+      return;
+    }
+
+    await addDoc(collection(db, "products"), {
+      title,
+      description,
+      category,
+      imageUrl,
+      ownerId: auth.currentUser.uid,
+      ownerEmail: auth.currentUser.email,
+      createdAt: serverTimestamp(),
     });
 
-    return () => unsubscribe();
-  }, []);
+    alert("Produkt lagt til!");
 
-  // Logger brukeren ut
-  async function handleLogout() {
-    await signOut(auth);
+    setTitle("");
+    setDescription("");
+    setCategory("");
+    setImageUrl("");
   }
 
   return (
-    <nav
-      style={{
-        backgroundColor: "#2563eb",
-        padding: "20px",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
+    <div style={{ padding: "30px" }}>
+      <h1>Legg til produkt</h1>
 
-      {/* Venstre side av menyen */}
-      <div style={{ display: "flex", gap: "20px" }}>
-        <Link style={linkStyle} to="/">Hjem</Link>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Produktnavn"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
-        {/* Vises kun når bruker er logget inn */}
-        {user && <Link style={linkStyle} to="/add">Legg til produkt</Link>}
+        <br /><br />
 
-        {user && <Link style={linkStyle} to="/my-products">Mine produkter</Link>}
-      </div>
+        <textarea
+          placeholder="Beskrivelse"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
 
-      {/* Høyre side av menyen */}
-      <div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
+        <br /><br />
 
-        {/* Vises hvis ingen bruker er logget inn */}
-        {!user ? (
-          <>
-            <Link style={linkStyle} to="/login">Logg inn</Link>
-            <Link style={linkStyle} to="/signup">Lag bruker</Link>
-          </>
-        ) : (
+        <input
+          type="text"
+          placeholder="Kategori"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        />
 
-          /* Vises når bruker er logget inn */
-          <>
-            <span style={{ color: "white" }}>{user.email}</span>
+        <br /><br />
 
-            <button onClick={handleLogout}>
-              Logg ut
-            </button>
-          </>
-        )}
-      </div>
-    </nav>
+      <select
+  value={category}
+  onChange={(e) => setCategory(e.target.value)}
+>
+  <option value="">Velg kategori</option>
+  <option value="clothes">Klær</option>
+  <option value="electronics">Elektronikk</option>
+  <option value="furniture">Møbler</option>
+</select>
+
+        <br /><br />
+
+        <button type="submit">Legg til produkt</button>
+      </form>
+    </div>
   );
 }
 
-// Styling for lenkene i menyen
-const linkStyle = {
-  color: "white",
-  textDecoration: "none",
-  fontWeight: "bold",
-};
-
-export default Navigation;
+export default AddProduct;
