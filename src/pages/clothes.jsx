@@ -1,12 +1,18 @@
+// Clothes.jsx viser alle produkter i kategorien klær
+
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
 function Clothes() {
+
+  // State som lagrer produkter fra Firebase
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+
+    // Henter alle produkter fra Firestore
     async function fetchProducts() {
       const querySnapshot = await getDocs(collection(db, "products"));
 
@@ -22,23 +28,80 @@ function Clothes() {
   }, []);
 
   return (
-    <div style={{ textAlign: "center", padding: "40px" }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#eff6ff",
+        textAlign: "center",
+        padding: "40px",
+      }}
+    >
       <h1>Klær</h1>
-      <p>Her finner du klær som kan byttes.</p>
 
-      <div style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
+      <p>
+        Her finner du klær som kan byttes.
+      </p>
+
+      {/* Produktkort */}
+      <div
+        style={{
+          display: "flex",
+          gap: "30px",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          marginTop: "30px",
+        }}
+      >
         {products
+
+          // Viser kun produkter i kategorien klær
           .filter((p) => p.category === "clothes")
+
           .map((product) => (
-            <div key={product.id}>
-              <img src={product.image} width="200" />
-              <h2>{product.title}</h2>
-              <p>{product.description}</p>
-              <p>Ønsker å bytte mot: {product.wants}</p>
-            </div>
+
+            // Klikk sender brukeren til produktsiden
+            <Link
+              to={`/product/${product.id}`}
+              key={product.id}
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+            >
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "20px",
+                  borderRadius: "16px",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                  width: "260px",
+                }}
+              >
+                <img
+                  src={product.image}
+                  width="220"
+                  style={{
+                    borderRadius: "12px",
+                    height: "180px",
+                    objectFit: "cover",
+                  }}
+                />
+
+                <h2>{product.title}</h2>
+
+                <p>{product.description}</p>
+
+                <p>
+                  Ønsker å bytte mot: {product.wants}
+                </p>
+              </div>
+            </Link>
           ))}
-          <Link to="/">← Tilbake</Link>
       </div>
+
+      <br />
+
+      <Link to="/">← Tilbake</Link>
     </div>
   );
 }
