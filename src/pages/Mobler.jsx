@@ -81,17 +81,15 @@ function Mobler() {
                   width: "260px",
                 }}
               >
-                <img
-                  src={
-                    src={product.image || product.imageUrl || "/images/mobler.png"}
-                  }
-                  width="220"
-                  style={{
-                    borderRadius: "12px",
-                    height: "180px",
-                    objectFit: "cover",
-                  }}
-                />
+               <img
+  src={product.image || product.imageUrl || "/images/mobler.png"}
+  width="220"
+  style={{
+    borderRadius: "12px",
+    height: "180px",
+    objectFit: "cover",
+  }}
+/>
 
                 <h2>{product.title}</h2>
 
