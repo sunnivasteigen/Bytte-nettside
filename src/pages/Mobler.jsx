@@ -55,11 +55,12 @@ function Mobler() {
         {products
 
           // Viser kun produkter i kategorien møbler
-          .filter(
-            (p) =>
-              p.category === "Møbler" ||
-              p.category === "mobler"
-          )
+         .filter(
+  (p) =>
+    p.category === "furniture" ||
+    p.category === "Møbler" ||
+    p.category === "mobler"
+)
 
           .map((product) => (
 
